@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Market Hub - Homepage</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Car Market Hub</h1>
+		<div class="image-container">
+            <img src="image_96.jpg" alt="home">
+        <p>Your Ultimate Destination for Buying and Selling Cars</p>
+        <form action="search.php" method="GET" class="search-form">
+            <input type="text" name="query" placeholder="Search for cars...">
+            <button type="submit">Search</button>
+        </form>
+    </header>
+
+    <main>
+        <section class="featured-cars">
+            <h2>Featured Cars</h2>
+            <div class="car-list">
+                <!-- PHP code to fetch and display featured cars -->
+                <?php
+                include('../includes/db.php');
+                $result = $conn->query("SELECT * FROM cars ORDER BY created_at DESC LIMIT 6");
+                while ($car = $result->fetch_assoc()) {
+                    echo '<div class="car-item">';
+                    echo '<img src="../assets/images/' . $car['image'] . '" alt="' . $car['make'] . ' ' . $car['model'] . '">';
+                    echo '<h3>' . $car['make'] . ' ' . $car['model'] . '</h3>';
+                    echo '<p>Price: $' . number_format($car['price']) . '</p>';
+                    echo '<a href="listing.php?id=' . $car['id'] . '">View Details</a>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
+        </section>
+    </main>
+<section id="listings">
+        <h2>Car Listings</h2>
+        <div class="car-listing">
+            <img src="car1.png" alt="Car 1">
+            <h3>Brand New Car 1</h3>
+            <p>Description of Car 1</p>
+        </div>
+        <div class="car-listing">
+            <img src="car2.jpg" alt="Car 2">
+            <h3>Used Car 2</h3>
+            <p>Description of Car 2</p>
+        </div>
+        <!-- Add more car listings as needed -->
+    </section>
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form id="contactForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+    <footer>
+        <p>&copy; 2024 CarMarketHub. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
+    <?php include('../includes/footer.php'); ?>
+</body>
+</html>
